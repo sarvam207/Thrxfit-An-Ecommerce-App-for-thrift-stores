@@ -8,8 +8,10 @@ from . import views
 urlpatterns = [
     # Store main page
     path('', views.store_app, name='store_app'),
+    
     # Individual product
-    path('product/<slug:product_slug>/', views.product_info, name='product-info'),
+    path('items/<slug:product_slug>/', views.items, name='items'),
+    
     # Individual category
     path('search/<slug:category_slug>/', views.list_category, name='list-category'),
 ]

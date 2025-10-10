@@ -1,56 +1,84 @@
-
 {% extends "./base.html" %}
-
 {% load static %}
 
-
 {% block content %}
-
-
-    <!-- Introduction section -->
-  
-    <section class="py-4 text-center container">
-
-        <div class="row py-lg-5">
-        
-            <div class="col-lg-6 col-md-8 mx-auto">
-                
-
-                <h3> Thrxfit...Simplicity at it's finest. </h3>
-                <h4> 🧿ᴄᴜʀᴀᴛᴇᴅ ᴛʜʀɪꜰᴛ ꜰᴏʀ ᴛʜᴇ ᴅᴇᴛᴀɪʟ-ᴏʙꜱᴇꜱꜱᴇᴅ. </h4>
-                <h4> ✨ʜᴀɴᴅᴘɪᴄᴋᴇᴅ Qᴜᴀʟɪᴛʏ. ɴᴏ ᴄᴏᴍᴘʀᴏᴍɪꜱᴇꜱ </h4> 
-                <h4> 💬ᴅᴍ ᴛᴏ ʙᴏᴏᴋ ɪᴛᴇᴍꜱ </h4> 
-                <h4> 📦ᴘᴀɴ ɪɴᴅɪᴀ ᴅᴇʟɪᴠᴇʀʏ </h4> 
-                <h4> 🔙ɴᴏ ᴄᴏᴅ/ʀᴇᴛᴜʀɴ/ᴇxᴄʜᴀɴɢᴇ/ᴄᴀɴᴄᴇʟ </h4>
-
-                <br>
-                
-
-                <p class="lead text-muted">
-
-                Browse our extensive collection.
-
-                </p>
-
-
-                <br>
-        
-                <a href="#" class="btn btn-primary my-2"> Create an account </a>
-                
-                
+<!-- Hero Section -->
+<section class="py-5 text-center" style="background: rgba(255,255,255,0.93); border-radius: 16px;">
+    <div class="row py-lg-5 align-items-center">
+        <div class="col-lg-7 mx-auto">
+            <h1 class="fw-bold" style="color:#247d52; letter-spacing:1px; font-family:'Montserrat',sans-serif;">
+                The New Standard of Thrift
+            </h1>
+            <h4 class="mb-3 fw-light text-dark" style="font-size:1.4rem;">
+                Discover timeless vintage pieces<br>
+                Carefully selected for those who care about style—and the planet.
+            </h4>
+            <p class="lead text-muted fs-5" style="margin-bottom:2rem;">
+                <i class="fa fa-check-circle text-success"></i> 100+ Unique Brands &nbsp; | &nbsp; 
+                <i class="fa fa-leaf text-success"></i> Eco Packaging &nbsp; | &nbsp;
+                <i class="fa fa-globe text-success"></i> Pan India Delivery
+            </p>
+            
+            <div class="row text-start justify-content-center g-3 mb-3">
+                <div class="col-md-5 col-10">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><i class="fa fa-check text-success"></i>  Handpicked vintage</li>
+                        <li class="mb-2"><i class="fa fa-check text-success"></i>  1-of-1 unique finds</li>
+                        <li class="mb-2"><i class="fa fa-check text-success"></i>  Worldwide shipping</li>
+                    </ul>
+                </div>
+                <div class="col-md-5 col-10">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><i class="fa fa-check text-success"></i>  100% authentic</li>
+                        <li class="mb-2"><i class="fa fa-check text-success"></i>  No returns, exchanges or cancellations</li>
+                        <li class="mb-2"><i class="fa fa-check text-success"></i>  Trusted by 1000+ style lovers</li>
+                    </ul>
+                </div>
             </div>
-        
+            <a href="#" class="btn btn-success btn-lg px-4 fw-bold">
+                Shop The Collection
+            </a>
         </div>
+    </div>
+</section>
 
-    
-    </section>
+<!-- Featured Image -->
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-10 col-md-7">
+            <img src="{% static 'images/fabric-texture.jpg' %}" alt="Brand hero" class="img-fluid rounded-4 shadow" style="object-fit:cover;">
+            <!-- If you want to use your uploaded image, update as: -->
+            <!-- <img src="{% static 'image.jpg' %}" alt="Brand look" class="img-fluid rounded-4 shadow"> -->
+        </div>
+    </div>
+</div>
 
-
-
+<!-- Product Gallery Section -->
+<div class="album py-5" style="background: rgba(245,255,250,0.85); border-radius: 20px;">
+    <div class="container">
+        <div class="d-flex align-items-center pb-3 h5" style="color:#247d52; font-weight:600;">
+            <i class="fa fa-shopping-bag me-2"></i> Thrxfit Collection
+        </div>
+        <hr>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+            {% for product in my_products %}
+                <div class="col">
+                    <div class="card shadow-sm h-100 border-0" style="border-radius:12px; background:#fff;">
+                        <img class="img-fluid" alt="{{ product.name }}" src="{{ product.image.url }}" style="border-top-left-radius:12px; border-top-right-radius:12px; min-height:225px; object-fit:cover;">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <p class="card-text mb-1" style="font-family:'Montserrat',sans-serif; font-weight:500; font-size:1.05rem;">
+                                <a class="text-success text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.name|capfirst }}</a>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="fw-bold" style="color:#247d52;">₹ {{ product.price }}</span>
+                                <!-- Optional eco badge for each product -->
+                                <span class="badge bg-light text-success border border-success"><i class="fa fa-leaf"></i> Eco</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}
-
-
-
-
-
-
