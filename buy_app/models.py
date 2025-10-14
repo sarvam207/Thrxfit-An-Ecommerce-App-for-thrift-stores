@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class BuyAddress(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
     city = models.CharField(max_length=100)

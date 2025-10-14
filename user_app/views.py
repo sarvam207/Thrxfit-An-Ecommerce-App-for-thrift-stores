@@ -4,7 +4,8 @@ from django.shortcuts import redirect
 from . forms import CreateUserForm, LoginForm
 from django.contrib import messages
 
-
+from buy_app. forms import BuyForm
+from buy_app.models import BuyAddress
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -56,6 +57,38 @@ def user_logout(request):
     auth.logout(request)
     return redirect('store_app')
 
+
 @login_required(login_url='login')
 def dashboard(request):
     return render(request, 'user_app/dashboard.html')
+
+
+@login_required(login_url='login')
+def manage_shipping(request):
+    
+    try:
+        #user with existing shipping address
+        shipping = BuyAddress.objects.get(user=request.user)
+
+    except BuyAddress.DoesNotExist:
+        #new user without shipping address
+        shipping = None
+        
+    form = BuyForm(instance=shipping)
+    
+    if request.method == 'POST':
+        form = BuyForm(request.POST, instance=shipping)
+        
+        if form.is_valid():
+            shipping_user=form.save(commit=False)
+            shipping_address = form.save(commit=False)
+            
+            #adding forign key user
+            shipping_address.user = request.user
+            shipping_address.save()
+            messages.success(request, 'Shipping address saved successfully.')
+            
+            
+    context= {'form': form}
+    return render(request, 'user_app/manage-shipping.html', context)
+

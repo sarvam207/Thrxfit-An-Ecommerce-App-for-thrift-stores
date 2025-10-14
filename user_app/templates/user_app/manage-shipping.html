@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(120deg, #f8fafc 0%, #d3dde6 100%);
+        min-height: 100vh;
+    }
+
+    .address-card {
+        max-width: 600px; 
+        margin: 64px auto;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px 2px rgba(30, 41, 59, 0.05);
+        padding: 48px 40px 40px 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .address-card h3, 
+    .address-card h5 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .address-card h3 {
+        font-size: 1.75rem;
+    }
+
+    .address-card h5 {
+        color: #444;
+        font-weight: 500;
+    }
+
+    .address-card hr {
+        width: 60%;
+        margin: 20px auto 28px auto;
+    }
+
+    .address-card form {
+        width: 100%;
+        position: relative;
+    }
+
+    .address-card .btn-primary {
+        background: #357b8c;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 16px;
+        padding: 10px 0;
+    }
+
+    .address-card a {
+        color: #357b8c;
+        text-decoration: underline;
+        font-size: 15px;
+    }
+
+
+
+
+    @media (max-width: 600px) {
+        .address-card {
+            margin: 24px 10px;
+            padding: 24px 16px;
+            max-width: 95%;
+        }
+    }
+</style>
+
+<section>
+    <div class="address-card">
+        <h3>Manage your Address</h3>
+        <h5 class="mb-3">Add your shipping address!</h5>
+        <hr>
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+    {{ form.full_name| as_crispy_field }}
+    {{ form.address| as_crispy_field }}
+    {{ form.city| as_crispy_field }}
+    {{ form.state| as_crispy_field }}
+    {{ form.postal_code| as_crispy_field }}
+    {{ form.phone| as_crispy_field }}
+    <button type="submit" class="btn btn-primary w-100">Save Address</button>
+  
+  </form>
+{% endblock %}

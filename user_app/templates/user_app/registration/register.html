@@ -97,15 +97,16 @@
             {{ form.email|as_crispy_field }}
 
             <div class="password-wrapper mb-3" style="position: relative;">
-    {{ form.password1|as_crispy_field }}
-    <span class="toggle-password" onclick="togglePassword('id_password1', this)">Show</span>
-</div>
+                {{ form.password1|as_crispy_field }}
+                <span class="toggle-password" onclick="togglePassword('id_password1', this)">Show</span>
+            </div>
 
-<div class="password-wrapper mb-3" style="position: relative;">
-    {{ form.password2|as_crispy_field }}
-    <span class="toggle-password" onclick="togglePassword('id_password2', this)">Show</span>
-</div>
-
+            <div class="password-wrapper mb-3" style="position: relative;">
+                {{ form.password2|as_crispy_field }}
+                <span class="toggle-password" onclick="togglePassword('id_password2', this)">Show</span>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
 <script>
 function togglePassword(fieldId, toggleBtn) {
     const field = document.getElementById(fieldId);

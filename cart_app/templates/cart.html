@@ -1,4 +1,4 @@
-{% include "base.html" %}
+{% extends "base.html" %}
 
 
 {% load static %}
@@ -47,7 +47,7 @@
               
                 <div class="col-6"> Product </div>
               
-                <div class="col-6 text-end"><span class="h6 fw-bold">${{product.price|mul:item.quantity}} </span></div>
+                <div class="col-6 text-end"><span class="h6 fw-bold">₹ {{product.price|mul:item.quantity}} </span></div>
             
               </div>
             
@@ -120,11 +120,25 @@
       <hr>
       <div class="col-12 text-end">
  
-        <div class="h6 fw-bold"> Sub total: $ <div id="total" class="d-inline-flex"> {{cart.get_total}} </div></div>
+        <div class="h6 fw-bold"> Sub total:₹ <div id="total" class="d-inline-flex"> {{cart.get_total}} </div></div>
  
       </div>
- 
 
+      <div class="col-12 text-end">
+ 
+        <a href="{% url 'store_app' %}" class="btn btn-outline-secondary btn-sm">
+ 
+          <i class="fa fa-arrow-left"></i> Continue shopping
+ 
+        </a>
+ 
+        &nbsp;
+ 
+        <a href="{% url 'checkout' %}" class="btn btn-primary btn-sm">
+ 
+          Proceed to checkout &nbsp; <i class="fa fa-arrow-right"></i>
+ 
+        </a>
     </div>
   
 
