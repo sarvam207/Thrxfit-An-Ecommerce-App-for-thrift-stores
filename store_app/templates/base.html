@@ -7,67 +7,112 @@
     <title>{% block title %}Thrxfit{% endblock %}</title>
 
     <!-- External CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Fabric texture background from static -->
-    <style>
-        body {
-            {% comment %} background-image: url("{% static 'images/fabric-texture.jpg' %}"); {% endcomment %}
-            background-size: cover;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            min-height: 100vh;
-        }
-        .navbar {
-            background: rgba(38, 50, 56, 0.97)!important;
-            box-shadow: 0 4px 12px rgba(38, 50, 56, 0.13);
-            border-bottom: 4px solid #29a19c;
-        }
-        .navbar-brand {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.1rem;
-            letter-spacing: 2px;
-            font-weight: 700;
-        }
-        .navbar-nav .nav-link, .navbar-nav .btn {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-            color: #fff !important;
-        }
-        .navbar-nav .dropdown-menu {
-            background: #f9f9f9;
-            border-radius: 6px;
-            min-width: 180px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.09);
-        }
+
+<style>
+    /* Buttons */
+    .btn-custom {
+        background: #247d52; /* primary brand green */
+        color: #fff;
+        border-radius: 50px;
+        padding: 0.5rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .btn-custom:hover {
+        background: #1e6a43;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        color: #fff;
+    }
+
+    .btn-outline-custom {
+        border: 2px solid #247d52;
+        color: #247d52;
+        border-radius: 50px;
+        padding: 0.5rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-custom:hover {
+        background: #247d52;
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+    .btn-cart {
+        position: relative;
+        border-radius: 50px;
+        padding: 0.45rem 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        background: #fff;
+        color: #247d52;
+        border: 2px solid #247d52;
+    }
+
+    .btn-cart:hover {
+        background: #247d52;
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+    /* Cart quantity badge */
+    #cart-qty {
+        background: #ff5a5f;
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 50%;
+        padding: 0.2rem 0.5rem;
+        margin-left: 0.2rem;
+        min-width: 1.2rem;
+        text-align: center;
+    }
+
+    /* Dropdown / Categories menu */
+    .navbar-nav .dropdown-toggle::after {
+        margin-left: 0.3rem;
+    }
+
+    .navbar-nav .dropdown-menu {
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        padding: 0.5rem 0;
+    }
+
+    .navbar-nav .dropdown-item {
+        padding: 0.6rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border-radius: 8px;
+        margin: 0 0.5rem;
+    }
+
+    .navbar-nav .dropdown-item:hover {
+        background: #247d52;
+        color: #fff;
+    }
+
+    /* Navbar on small screens */
+    @media (max-width: 768px) {
         .navbar-nav .dropdown-item {
-            color: #263238;
-            transition: background 0.2s;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 400;
+            margin: 0.2rem 0;
         }
-        .navbar-nav .dropdown-item:hover {
-            background: #e0f7fa;
+
+        .btn-custom, .btn-outline-custom {
+            width: 100%;
+            margin-bottom: 0.5rem;
         }
-        .btn-outline-secondary {
-            border-color: #29a19c!important;
-            color: #29a19c!important;
-            background: #fff!important;
-        }
-        .btn-outline-secondary:hover {
-            background: #29a19c!important;
-            color: #fff!important;
-            border-color: #29a19c!important;
-        }
-        .main-content {
-            background: rgba(255,255,255,0.86);
-            border-radius: 10px;
-            margin: 40px auto;
-            padding: 36px 24px;
-            max-width: 1200px;
-            box-shadow: 0 6px 36px rgba(38,50,56,0.09);
-        }
-    </style>
+    }
+</style>
+
+
     {% block extra_head %}{% endblock %}
 
     <!-- JavaScript -->
@@ -82,12 +127,12 @@
 <body>
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand text-white" href="{% url 'store_app' %}">Thrxfit</a>
+        <a class="navbar-brand" href="{% url 'store_app' %}">Thrxfit</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon" style="filter:invert(1);"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">  
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -110,18 +155,47 @@
                     </ul>
                 </li>
             </ul>
+
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item me-2">
-                    <a class="btn btn-outline-light" href="/"><i class="fa fa-user-plus"></i> Register</a>
-                </li>
-                <li class="nav-item me-2">
-                    <a class="btn btn-outline-light" href="/"><i class="fa fa-sign-in"></i> Login</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-custom" href="{% url 'dashboard' %}">
+                            <i class="fa fa-user" aria-hidden="true"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="btn btn-custom" href="{% url 'logout' %}">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                        </a>
+                    </li>      
+                {% else %}    
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-custom" href="{% url 'register' %}">
+                            <i class="fa fa-user-plus"></i> Register
+                        </a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-custom" href="{% url 'login' %}">
+                            <i class="fa fa-sign-in"></i> Login
+                        </a>
+                    </li>
+                {% endif %}
+
                 <li class="nav-item">
-                    <a href="{% url 'cart-summary' %}" class="btn btn-outline-primary">
-                        <i class="fa fa-shopping-cart"></i>
+                    <a type="button" role="button" href="{% url 'cart-summary' %}" class="btn btn-cart"> 
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <div id="cart-qty" class="d-inline-flex">
+                            {% with unique_count=cart.unique_count %}
+                                {% if unique_count and unique_count > 0 %}
+                                    {{ unique_count }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            {% endwith %}
+                        </div>         
                     </a>
                 </li>
+
             </ul>
         </div>
     </div>
@@ -129,8 +203,19 @@
 
 <div class="container main-content">
     {% block content %}
-    <!-- Page content goes here -->
     {% endblock %}
 </div>
+
+<footer>
+    <div class="container">
+        <p>© 2025 Thrxfit. All rights reserved.</p>
+        <div>
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms</a> |
+            <a href="#">Contact</a>
+        </div>
+    </div>
+</footer>
+
 </body>
 </html>

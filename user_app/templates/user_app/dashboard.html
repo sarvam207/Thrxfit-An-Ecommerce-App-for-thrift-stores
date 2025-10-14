@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- User Info Sidebar -->
+        <aside class="col-md-3 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <!-- Profile Photo Placeholder -->
+                    <img src="/" alt="Profile Photo" class="rounded-circle mb-3" width="80">
+                    <h4>{{ user.get_full_name|default:user.username }}</h4>
+                    <p class="text-muted">{{ user.email }}</p>
+                    <hr>
+                    <ul class="nav flex-column text-start">
+                        <li class="nav-item mb-2"><a class="nav-link" href="#"><i class="bi bi-person"></i> My Profile</a></li>
+                        <li class="nav-item mb-2"><a class="nav-link" href="#"><i class="bi bi-bag"></i> My Orders</a></li>
+                        <li class="nav-item mb-2"><a class="nav-link" href="#"><i class="bi bi-heart"></i> Wishlist</a></li>
+                        <li class="nav-item mb-2"><a class="nav-link" href="#"><i class="bi bi-cart"></i> Cart</a></li>
+                        <li class="nav-item mt-4"><a class="nav-link text-danger" href="{% url 'logout' %}">
+                            <i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Content -->
+        <section class="col-md-9">
+            <h2 class="mb-4">Welcome, {{ user.username }}!</h2>
+            <div class="row mb-4">
+                <!-- Orders Card -->
+                <div class="col-sm-4">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-bag-fill display-6 text-primary"></i>
+                            <h5 class="card-title mt-2">Orders Placed</h5>
+                            <p class="card-text">{{ orders|length }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Wishlist Card -->
+                <div class="col-sm-4">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-heart-fill display-6 text-danger"></i>
+                            <h5 class="card-title mt-2">Wishlist</h5>
+                            <p class="card-text">{{ wishlist|length }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cart Card -->
+                <div class="col-sm-4">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-cart-fill display-6 text-success"></i>
+                            <h5 class="card-title mt-2">Cart Items</h5>
+                            <p class="card-text">{{ cart|length }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Orders Table (optional, use if you have orders in context) -->
+            <h5>Recent Orders</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders|slice:":5" %}
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.date }}</td>
+                            <td>{{ order.status }}</td>
+                            <td>{{ order.total }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">No orders found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

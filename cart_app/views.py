@@ -1,86 +1,77 @@
 from django.shortcuts import render
-
-# from .cart import Cart
-from store_app.models import Product
-
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 
 
+from .cart import Cart
+from store_app.models import Product
+
+# ...existing code...
+from decimal import Decimal
+
+
 def cart_summary(request):
 
-    # cart = Cart(request)
-
-    return render(request, 'cart-summary.html')
-
-# , {'cart':cart}
+    cart = Cart(request)
+    return render(request, 'cart.html', {'cart':cart})
 
 def cart_add(request):
 
-    # cart = Cart(request)
+    cart = Cart(request)
 
-    # if request.POST.get('action') == 'post':
+    if request.POST.get('action') == 'post':
 
-    #     product_id = int(request.POST.get('product_id'))
-    #     product_quantity = int(request.POST.get('product_quantity'))
+        product_id = int(request.POST.get('product_id'))
+        quantity = int(request.POST.get('quantity'))
 
-    #     product = get_object_or_404(Product, id=product_id)
+        product = get_object_or_404(Product, id=product_id)
 
-    #     cart.add(product=product, product_qty=product_quantity)
+        cart.add(product=product, quantity=quantity)
+        
+        cart_quantity = cart.__len__()
 
+        response = JsonResponse({'quantity': cart_quantity})
 
-    #     cart_quantity = cart.__len__()
-
-
-    #     response = JsonResponse({'qty': cart_quantity})
-
-        # return response
-    pass
+        return response
         
 
 
 def cart_delete(request):
 
-    # cart = Cart(request)
+    cart = Cart(request)
 
-    # if request.POST.get('action') == 'post':
+    if request.POST.get('action') == 'post':
 
-    #     product_id = int(request.POST.get('product_id'))
+        product_id = int(request.POST.get('product_id'))
 
-    #     cart.delete(product=product_id)
+        cart.delete(product=product_id)
 
+        cart_quantity = cart.__len__()
 
-    #     cart_quantity = cart.__len__()
+        cart_total = cart.get_total()
 
-    #     cart_total = cart.get_total()
+        response = JsonResponse({'quantity': cart_quantity, 'total': cart_total})
 
-
-    #     response = JsonResponse({'qty':cart_quantity, 'total':cart_total})
-
-        # return response
-        pass
+        return response
 
 
 
 def cart_update(request):
 
-    # cart = Cart(request)
+    cart = Cart(request)
 
-    # if request.POST.get('action') == 'post':
+    if request.POST.get('action') == 'post':
 
-    #     product_id = int(request.POST.get('product_id'))
-    #     product_quantity = int(request.POST.get('product_quantity'))
+        product_id = int(request.POST.get('product_id'))
+        product_quantity = int(request.POST.get('product_quantity'))
 
-    #     cart.update(product=product_id, qty=product_quantity)
-
-
-    #     cart_quantity = cart.__len__()
-
-    #     cart_total = cart.get_total()
+        cart.update(product=product_id, qty=product_quantity)
 
 
-    #     response = JsonResponse({'qty':cart_quantity, 'total':cart_total})
+        cart_quantity = cart.__len__()
+        cart_total = cart.get_total()
 
-        # return response
-        pass
+        response = JsonResponse({'quantity': cart_quantity, 'total': cart_total})
+
+        return response
 

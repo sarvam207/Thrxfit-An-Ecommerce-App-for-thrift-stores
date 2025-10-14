@@ -37,10 +37,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'store_app',
-    'cart_app',
+    
+    'store_app', #django app for store
+    'cart_app', #django app for cart
+    'user_app', # django app for user
+    'buy_app', # django app for payment
+
+    'mathfilters', # for math operations in templates
+    'crispy_forms', # for better form rendering
+    'crispy_bootstrap5', # bootstrap5 theme for crispy forms
+    'import_export', # for data import export in admin panel
+
 ]
 
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
