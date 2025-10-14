@@ -10,7 +10,7 @@
     }
 
     .register-card {
-        max-width: 600px; /* widened from 400px */
+        max-width: 600px; 
         margin: 64px auto;
         background: #fff;
         border-radius: 16px;
@@ -43,6 +43,7 @@
 
     .register-card form {
         width: 100%;
+        position: relative;
     }
 
     .register-card .btn-primary {
@@ -58,6 +59,22 @@
         color: #357b8c;
         text-decoration: underline;
         font-size: 15px;
+    }
+
+    /* Show password toggle */
+    .password-wrapper {
+        position: relative;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: #357b8c;
+        user-select: none;
     }
 
     @media (max-width: 600px) {
@@ -78,13 +95,29 @@
             {% csrf_token %}
             {{ form.username|as_crispy_field }}
             {{ form.email|as_crispy_field }}
-            {{ form.password1|as_crispy_field }}
-            {{ form.password2|as_crispy_field }}
-            <button type="submit" class="btn btn-primary w-100 mt-3 mb-2">Create account</button>
-        </form>
-        <div class="mt-2 text-center">
-            <a href="{% url 'login' %}">Already have an account?</a>
-        </div>
-    </div>
-</section>
+
+            <div class="password-wrapper mb-3" style="position: relative;">
+    {{ form.password1|as_crispy_field }}
+    <span class="toggle-password" onclick="togglePassword('id_password1', this)">Show</span>
+</div>
+
+<div class="password-wrapper mb-3" style="position: relative;">
+    {{ form.password2|as_crispy_field }}
+    <span class="toggle-password" onclick="togglePassword('id_password2', this)">Show</span>
+</div>
+
+<script>
+function togglePassword(fieldId, toggleBtn) {
+    const field = document.getElementById(fieldId);
+    if (!field) return;
+
+    if (field.type === "password") {
+        field.type = "text";
+        toggleBtn.textContent = "Hide";
+    } else {
+        field.type = "password";
+        toggleBtn.textContent = "Show";
+    }
+}
+</script>
 {% endblock %}
