@@ -4,6 +4,8 @@ from django.shortcuts import redirect
 from . forms import CreateUserForm, LoginForm
 from django.contrib import messages
 
+from buy_app.models import Order, OrderItem
+
 from buy_app. forms import BuyForm
 from buy_app.models import BuyAddress
 from django.contrib.auth.models import auth
@@ -91,4 +93,14 @@ def manage_shipping(request):
             
     context= {'form': form}
     return render(request, 'user_app/manage-shipping.html', context)
+
+def track_orders(request):
+    try:
+        orders = OrderItem.objects.filter(order__user=request.user).order_by('-order__created_at')
+        
+        context= {'orders': orders}
+        
+        return render(request, 'user_app/track-orders.html', context=context)
+    except:
+        return render(request, 'user_app/track-orders.html')
 

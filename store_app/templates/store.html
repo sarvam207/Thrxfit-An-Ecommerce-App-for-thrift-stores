@@ -44,14 +44,7 @@
     </div>
 </section>
 
-<!-- Featured Image -->
-<div class="container my-4">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-7">
-            <img src="{% static 'images/fabric-texture.jpg' %}" alt="Brand hero" class="img-fluid rounded-4 shadow" style="object-fit:cover; width:100%;">
-        </div>
-    </div>
-</div>
+
 
 <!-- Product Gallery Section -->
 <div class="album py-5" style="background: rgba(245,255,250,0.85); border-radius: 20px;">
@@ -69,11 +62,13 @@
                             <p class="card-text mb-1" style="font-family:'Montserrat',sans-serif; font-weight:500; font-size:1rem;">
                                 <a class="text-success text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.name|capfirst }}</a>
                             </p>
+                            
                             <div class="d-flex justify-content-between align-items-center mt-auto">
                                 <span class="fw-bold" style="color:#247d52;">₹ {{ product.price }}</span>
                                 <span class="badge bg-light text-success border border-success"><i class="fa fa-leaf"></i> Eco</span>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             {% endfor %}

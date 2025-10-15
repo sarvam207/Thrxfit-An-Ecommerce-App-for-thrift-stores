@@ -266,7 +266,7 @@
                 purchase_units: [
                     {
                         amount: {
-                            value: total_price
+                            value: total_price.toString().replace(',', '')  // Can also reference a variable or function
                         }
                     }
                 ]
@@ -280,6 +280,30 @@
             const captureOrderHandler = (details) => {
                 const payerName = details.payer.name.given_name;
                 console.log('Transaction completed');
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'complete_order' %}",
+                    data: {
+                        name: $('#name').val(),
+                        phone: $('#phone').val(),
+                        email: $('#email').val(),
+                        address: $('#address').val(),
+                        city: $('#city').val(),
+                        state: $('#state').val(),
+                        zipcode: $('#zipcode').val(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        action: 'post'
+                    },
+
+                    success: function(json){
+                        console.log(json);
+                        window.location.replace("{% url 'buy_success' %}");
+                    },
+                    error: function(response){
+                        alert("Error checking out.");
+                        window.location.replace("{% url 'buy_failed' %}");
+                    }
+                });
 
 
             };
@@ -302,40 +326,6 @@
             console.error('PayPal Buttons failed to render');
         });
 
-
-
-    //Complete checkout
-
-{% comment %} 
-    $(document).on('submit', function(e){
-        e.preventDefault();
-
-        $.ajax({
-            type: "POST",
-            url: "{% url 'complete_order' %}",
-            data: {
-                name: $('#name').val(),
-                phone: $('#phone').val(),
-                email: $('#email').val(),
-                address: $('#address').val(),
-                city: $('#city').val(),
-                state: $('#state').val(),
-                zipcode: $('#zipcode').val(),
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-                action: 'post'
-            },
-
-            success: function(json){
-                console.log(json);
-                window.location.replace("{% url 'buy_success' %}");
-            },
-            error: function(response){
-                alert("Error checking out.");
-                window.location.replace("{% url 'buy_failed' %}");
-            }
-        });
-    }); {% endcomment %}
-
 </script>
 
 
@@ -343,3 +333,13 @@
 
 
 {% endblock %}
+{% comment %} 
+    //Complete checkout
+
+
+    $(document).on('submit', function(e){
+        e.preventDefault();
+
+        
+    }); {% endcomment %}
+
