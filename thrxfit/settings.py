@@ -141,3 +141,6 @@ STATICFILES_DIRS =[BASE_DIR/'static']
 import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
+
+# PayPal settings
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
